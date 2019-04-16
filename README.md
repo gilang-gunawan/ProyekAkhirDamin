@@ -2,7 +2,9 @@
 Proyek Akhir Daming
 ## Task
 - Pra proses
-- Decision Tree
+Menghilangkan yang bukan penduduk US
+Mencari atribut yang tidak penting : make weka
+- Decision Tree C45
 - Laporan
 
 https://archive.ics.uci.edu/ml/datasets/Census-Income+%28KDD%29
