@@ -5,12 +5,6 @@ data
 View(data)
 summary(data)
 
-new_data <- na.omit(data)
-summary(new_data)
+str(data$V35)
+summary(data$V36)
 
-md.pattern(new_data)
-
-str(new_data)
-summary(new_data$V34)
-
-data_us <- 
