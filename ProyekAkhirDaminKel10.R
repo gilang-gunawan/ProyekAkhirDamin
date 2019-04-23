@@ -3,8 +3,11 @@ library(mice)
 
 #load data
 data <- read.csv("e:/census-income.csv", header = FALSE, na.strings = " ?")
+
+#eksplorasi
 View(data)
 summary(data)
+str(data)
 md.pattern(data)
 
 #isi nama atribut/colom
@@ -34,7 +37,53 @@ summary(new_data$citizenship)
 #menghilangkan instance yang berumur kurang dari 14 tahun
 new_data <- new_data[new_data$age>14,]
 new_data
-View(new_data)
 
+
+#memberikan nilai pada missing value
+summary(new_data)
+View(new_data)
+str(new_data)
 summary(new_data$age)
 
+#memberi nilai na pada country_of_birth_father menjadi unknown
+summary(new_data$country_of_birth_father) #ada 4085 dara NA
+levels <- levels(new_data$country_of_birth_father)
+levels[length(levels)+1] <- "unknown"
+
+new_data$country_of_birth_father <- factor(new_data$country_of_birth_father, levels = levels)
+new_data$country_of_birth_father[is.na(new_data$country_of_birth_father)] <- "unknown"
+
+summary(new_data$country_of_birth_father)
+
+#memberi nilai na pada country_of_birth_mother menjadi unknown
+summary(new_data$country_of_birth_mother) #ada 4085 dara NA
+levels <- levels(new_data$country_of_birth_mother)
+levels[length(levels)+1] <- "unknown"
+
+new_data$country_of_birth_mother <- factor(new_data$country_of_birth_mother, levels = levels)
+new_data$country_of_birth_mother[is.na(new_data$country_of_birth_mother)] <- "unknown"
+
+summary(new_data$country_of_birth_mother)
+
+#memberi nilai na pada country_of_birth_self menjadi unknown
+summary(new_data$country_of_birth_self) #ada 4085 dara NA
+levels <- levels(new_data$country_of_birth_self)
+levels[length(levels)+1] <- "unknown"
+
+new_data$country_of_birth_self <- factor(new_data$country_of_birth_self, levels = levels)
+new_data$country_of_birth_self[is.na(new_data$country_of_birth_self)] <- "unknown"
+
+summary(new_data$country_of_birth_self)
+
+#mengisi nilai na pada migration_prev_res_in_sunbelt menjadi unknown
+summary(new_data$migration_prev_res_in_sunbelt) #ada 4085 dara NA
+levels <- levels(new_data$migration_prev_res_in_sunbelt)
+levels[length(levels)+1] <- "unknown"
+
+new_data$migration_prev_res_in_sunbelt <- factor(new_data$migration_prev_res_in_sunbelt, levels = levels)
+new_data$migration_prev_res_in_sunbelt[is.na(new_data$migration_prev_res_in_sunbelt)] <- "unknown"
+
+summary(new_data$migration_prev_res_in_sunbelt)
+
+# missing value yang masih harus diisi >> migration_code-move_within_reg 
+#migration_code-change_in_msa, migration_code-change_in_reg, state_of_previous_residence
