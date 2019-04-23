@@ -31,8 +31,6 @@ View(data)
 new_data <- data[data$citizenship!=" Foreign born- Not a citizen of U S ",]
 summary(new_data$citizenship)
 
-View(new_data)
-
 #menghilangkan instance yang berumur kurang dari 14 tahun
 new_data <- new_data[new_data$age>14,]
 new_data
