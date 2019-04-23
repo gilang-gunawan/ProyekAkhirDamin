@@ -19,4 +19,5 @@ https://www.dol.gov/general/topic/youthlabor/agerequirements
 
 ## Penjelasan data
 https://www.census.gov/eos/www/naics/2017NAICS/2017_NAICS_Manual.pdf
+
 https://www2.1010data.com/documentationcenter/beta/Tutorials/MachineLearningExamples/CensusIncomeDataSet.html
