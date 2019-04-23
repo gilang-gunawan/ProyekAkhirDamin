@@ -13,6 +13,9 @@ summary(data$V36)
 #menghilangkan instance yang lahir di luar US and not citizen of US
 new_data <- data[data$V36!=" Foreign born- Not a citizen of U S ",]
 
+#binding marital status
+#karena terdapat data yang bisa di gabung seperti Husband, Wife bisa digabung menjadi Spouse,
+
 summary(new_data)
 View(new_data)
 summary(new_data$V42)
