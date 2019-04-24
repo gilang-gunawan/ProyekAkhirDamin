@@ -19,8 +19,8 @@ colnames(data) <- c("age", "class_of_worker","detailed_industry_recode",
                     "full_or_part_time_employment_stat", "capital_gains", "capital_losses", 
                     "dividends_from_stocks", "tax_filer_stat", "region_of_previous_residence", 
                     "state_of_previous_residence", "detailed_household_and_family_stat", 
-                    "detailed_household_summary_in_household", "instance_weight", "migration_code-change_in_msa", 
-                    "migration_code-change_in_reg", "migration_code-move_within_reg", "live_in_this_house_1_year_ago", 
+                    "detailed_household_summary_in_household", "instance_weight", "migration_code_change_in_msa", 
+                    "migration_code_change_in_reg", "migration_code_move_within_reg", "live_in_this_house_1_year_ago", 
                     "migration_prev_res_in_sunbelt", "num_persons_worked_for_employer", 
                     "family_members_under_18", "country_of_birth_father", "country_of_birth_mother", 
                     "country_of_birth_self", "citizenship", "own_business_or_self_employed", 
@@ -36,14 +36,13 @@ summary(new_data$citizenship)
 
 #menghilangkan instance yang berumur kurang dari 14 tahun
 new_data <- new_data[new_data$age>14,]
-new_data
+summary(new_data$age)
 
 
 #memberikan nilai pada missing value
 summary(new_data)
 View(new_data)
 str(new_data)
-summary(new_data$age)
 
 #memberi nilai na pada country_of_birth_father menjadi unknown
 summary(new_data$country_of_birth_father) #ada 4085 dara NA
@@ -85,5 +84,43 @@ new_data$migration_prev_res_in_sunbelt[is.na(new_data$migration_prev_res_in_sunb
 
 summary(new_data$migration_prev_res_in_sunbelt)
 
-# missing value yang masih harus diisi >> migration_code-move_within_reg 
-#migration_code-change_in_msa, migration_code-change_in_reg, state_of_previous_residence
+# isi nilai na migration_code-move_within_reg menjadi unknown
+summary(new_data$migration_code_move_within_reg)
+levels <- levels(new_data$migration_code_move_within_reg)
+levels[length(levels)+1] <- "unknown"
+
+new_data$migration_code_move_within_reg <- factor(new_data$migration_code_move_within_reg, levels = levels)
+new_data$migration_code_move_within_reg[is.na(new_data$migration_code_move_within_reg)] <- "unknown"
+
+summary(new_data$migration_code_move_within_reg)
+
+# isi nilai na pada migration_code-change_in_msa menjadi unknown
+summary(new_data$migration_code_change_in_msa)
+levels <- levels(new_data$migration_code_change_in_msa)
+levels[length(levels)+1] <- "unknown"
+
+new_data$migration_code_change_in_msa <- factor(new_data$migration_code_change_in_msa, levels = levels)
+new_data$migration_code_change_in_msa[is.na(new_data$migration_code_change_in_msa)] <- "unknown"
+
+summary(new_data$migration_code_change_in_msa)
+
+# isi nilai na pada migration_code-change_in_reg mnjd unknown
+summary(new_data$migration_code_change_in_reg)
+levels <- levels(new_data$migration_code_change_in_reg)
+levels[length(levels)+1] <- "unknown"
+
+new_data$migration_code_change_in_reg <- factor(new_data$migration_code_change_in_reg, levels = levels)
+new_data$migration_code_change_in_reg[is.na(new_data$migration_code_change_in_reg)] <- "unknown"
+
+summary(new_data$migration_code_change_in_reg)
+
+# isi nilai na pada state_of_previous_residence mnjd unknown
+summary(new_data$state_of_previous_residence)
+levels <- levels(new_data$state_of_previous_residence)
+levels[length(levels)+1] <- "unknown"
+
+new_data$state_of_previous_residence <- factor(new_data$state_of_previous_residence, levels = levels)
+new_data$state_of_previous_residence[is.na(new_data$state_of_previous_residence)] <- "unknown"
+
+summary(new_data$state_of_previous_residence)
+
