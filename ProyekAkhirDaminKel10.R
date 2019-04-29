@@ -79,8 +79,9 @@ rparttrain <- predict(train_rpart, newdata = train_data, type = "class")
 test_pred <- predict(train_rpart, newdata = test_data, type = "class") 
 test_pred
 
-table(test_pred, test_data$class_income)
-(25111+824)/(25111 + 1516 + 472 + 824)
-(25111 + 1516 + 472 + 824)
-nrow(test_data)
-summary(test_data$education)
+tabel <- table(test_pred, test_data$class_income)
+
+tabel
+
+akurasi <- (tabel[1,1]+tabel[2,2])/(tabel[1,1]+tabel[1,2]+tabel[2,1]+tabel[2,2])
+akurasi
