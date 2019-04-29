@@ -1,11 +1,14 @@
 #import package
+library(party)
 library(mice)
+library(ggplot2)
+library(rpart)
+
 
 ## PRAPROSES
 
 #load data
 data <- read.csv("e:/census-income.csv", header = FALSE, na.strings = " ?")
-
 #eksplorasi
 View(data)
 summary(data)
@@ -13,21 +16,20 @@ str(data)
 md.pattern(data)
 
 #isi nama atribut/colom
-colnames(data) <- c("age", "class_of_worker","detailed_industry_recode", 
-                    "detailed_occupation_recode", "education", "wage_per_hour", 
-                    "enroll_in_edu_inst_last_wk", "marital_stat_Never_married", 
-                    "major_industry_code", "major_occupation_code", "race", "hispanic_origin", 
-                    "sex", "member_of_a_labor_union", "reason_for_unemployment", 
-                    "full_or_part_time_employment_stat", "capital_gains", "capital_losses", 
-                    "dividends_from_stocks", "tax_filer_stat", "region_of_previous_residence", 
-                    "state_of_previous_residence", "detailed_household_and_family_stat", 
-                    "detailed_household_summary_in_household", "instance_weight", "migration_code_change_in_msa", 
-                    "migration_code_change_in_reg", "migration_code_move_within_reg", "live_in_this_house_1_year_ago", 
-                    "migration_prev_res_in_sunbelt", "num_persons_worked_for_employer", 
-                    "family_members_under_18", "country_of_birth_father", "country_of_birth_mother", 
-                    "country_of_birth_self", "citizenship", "own_business_or_self_employed", 
-                    "fill_inc_questionnaire_for_veterans_admin", "veterans_benefits", "weeks_worked_in_year", 
-                    "year", "class_gaji")
+colnames(data) <- c("age", "class_worker", "det_ind_code", 
+                    "det_occ_code", "education", "wage_per_hour", 
+                    "hs_college", "marital_stat", 
+                    "major_ind_code", "major_occ_code", "race", "hisp_origin", 
+                    "sex", "union_member", "unemp_reason", "full_or_part_emp", 
+                    "capital_gains", "capital_losses", "stock_dividends", 
+                    "tax_filer_stat", "region_prev_res", "state_prev_res", 
+                    "det_hh_fam_stat", "det_hh_summ", "instance_weight", 
+                    "mig_chg_msa", "mig_chg_reg", 
+                    "mig_move_reg", "mig_same", "mig_prev_sunbelt", "num_emp", 
+                    "fam_under_18", "country_father", "country_mother", "country_self", 
+                    "citizenship", "own_or_self", "vet_question", "vet_benefits", 
+                    "weeks_worked", "year", "class_income"
+)
 
 
 View(data)
@@ -54,5 +56,31 @@ for (i in 1:ncol(new_data)) {
     new_data[,i][is.na(new_data[,i])] <- "unknown"
   }
 }
+View(new_data)
 
 
+#bagi data
+set.seed(1234)
+indx <- sample(2, nrow(data), replace=TRUE, prob=c(0.8, 0.2))
+train_data <- new_data[indx==1,]
+test_data <- new_data[indx==2,]
+train_label <- factor(train_data[,"class_income"])
+str(train_data)
+
+#test
+myFormula <- class_income ~.
+train_rpart <- rpart(myFormula, data = train_data, control = rpart.control(minsplit = 100))
+print(train_rpart)
+plot(train_rpart)
+text(train_rpart, use.n = TRUE)
+rparttrain <- predict(train_rpart, newdata = train_data, type = "class")
+
+
+test_pred <- predict(train_rpart, newdata = test_data, type = "class") 
+test_pred
+
+table(test_pred, test_data$class_income)
+(25111+824)/(25111 + 1516 + 472 + 824)
+(25111 + 1516 + 472 + 824)
+nrow(test_data)
+summary(test_data$education)
